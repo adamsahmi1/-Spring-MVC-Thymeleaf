@@ -13,11 +13,12 @@ import org.springframework.boot.security.autoconfigure.SecurityAutoConfiguration
 import org.springframework.boot.security.autoconfigure.UserDetailsServiceAutoConfiguration;
 import org.springframework.boot.security.autoconfigure.web.servlet.ServletWebSecurityAutoConfiguration;
 
-@SpringBootApplication(exclude = {
-        SecurityAutoConfiguration.class,
-        UserDetailsServiceAutoConfiguration.class,
-        ServletWebSecurityAutoConfiguration.class
-})
+@SpringBootApplication
+// (exclude = {
+//        SecurityAutoConfiguration.class,
+//        UserDetailsServiceAutoConfiguration.class,
+//        ServletWebSecurityAutoConfiguration.class
+//})
 public class MundiSpringMvcApplication {
 
     public static void main(String[] args) {
