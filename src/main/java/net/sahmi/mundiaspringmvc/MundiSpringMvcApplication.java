@@ -5,14 +5,23 @@ import net.sahmi.mundiaspringmvc.repository.ProductRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
+import org.springframework.boot.security.autoconfigure.SecurityAutoConfiguration;
+import org.springframework.boot.security.autoconfigure.UserDetailsServiceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
-@SpringBootApplication
-public class MundiaSpringMvcApplication {
+import org.springframework.boot.security.autoconfigure.SecurityAutoConfiguration;
+import org.springframework.boot.security.autoconfigure.UserDetailsServiceAutoConfiguration;
+import org.springframework.boot.security.autoconfigure.web.servlet.ServletWebSecurityAutoConfiguration;
+
+@SpringBootApplication(exclude = {
+        SecurityAutoConfiguration.class,
+        UserDetailsServiceAutoConfiguration.class,
+        ServletWebSecurityAutoConfiguration.class
+})
+public class MundiSpringMvcApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MundiaSpringMvcApplication.class, args);
+        SpringApplication.run(MundiSpringMvcApplication.class, args);
     }
 
     @Bean
