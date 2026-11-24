@@ -21,9 +21,18 @@ public class ProductController {
         model.addAttribute("productList", products);
         return "products";
     }
+    @GetMapping("/")
+    public String home() {
+        return "redirect:/index";
+    }
     @GetMapping("/delete")
     public String delete(@RequestParam(name = "id") Long id) {
         productRepository.deleteById(id);
         return "redirect:/index";
+    }
+    @GetMapping("/admin/newProduct")
+    public String newProduct(Model model) {
+        model.addAttribute("product", new Product());
+        return "new-product";
     }
 }
