@@ -1,10 +1,13 @@
 package net.sahmi.mundiaspringmvc.web;
+import jakarta.validation.Valid;
 import org.springframework.ui.Model;
 import net.sahmi.mundiaspringmvc.entities.Product;
 import net.sahmi.mundiaspringmvc.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -34,5 +37,11 @@ public class ProductController {
     public String newProduct(Model model) {
         model.addAttribute("product", new Product());
         return "new-product";
+    }
+    @PostMapping("/saveProduct")
+    public String saveProduct(@Valid Product product, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) return "new-product";
+        productRepository.save(product);
+        return "redirect:/admin/newProduct";
     }
 }
