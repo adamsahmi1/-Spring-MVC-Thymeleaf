@@ -11,33 +11,41 @@
 </head>
 <body>
 <div class="p-3" layout:fragment="content">
-    <div class="mb-3" sec:authorize="hasRole('ADMIN')">
-        <a class="btn btn-primary" th:href="@{/admin/addProduct}">Add new product</a>
+
+        <form class="d-flex gap-2 align-items-end" method="get" th:action="@{/user/searchProducts}">
+            <div>
+                <label for="searchProduct" class="form-label">Search Product</label>
+                <input type="text" class="form-control" id="searchProduct" name="productName"
+                       th:value="${query}" placeholder="Search Product">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+        <div class="mb-3 mt-3" sec:authorize="hasRole('ADMIN')">
+            <a class="btn btn-primary" th:href="@{/admin/addProduct}">Add new product</a>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="p:${products}">
+                <td th:text="${p.id}"></td>
+                <td th:text="${p.name}"></td>
+                <td th:text="${p.price}"></td>
+                <td th:text="${p.quantity}"></td>
+                <td sec:authorize="hasRole('ADMIN')">
+                    <form method="post" th:action="@{/admin/delete(id=${p.id})}">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="p:${products}">
-            <td th:text="${p.id}"></td>
-            <td th:text="${p.name}"></td>
-            <td th:text="${p.price}"></td>
-            <td th:text="${p.quantity}"></td>
-            <td sec:authorize="hasRole('ADMIN')">
-                <form method="post" th:action="@{/admin/delete(id=${p.id})}">
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
 
 </body>
-</html>
