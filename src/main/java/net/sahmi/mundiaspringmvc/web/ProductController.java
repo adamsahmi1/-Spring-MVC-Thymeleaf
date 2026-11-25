@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
+
+
 public class ProductController {
     private ProductRepository productRepository;
 
@@ -26,8 +28,7 @@ public class ProductController {
 
     @GetMapping("/user/index")
     public String index(Model model) {
-        List<Product> products = productRepository.findAll();
-        model.addAttribute("products", products);
+        model.addAttribute("products", productRepository.findAll());
         return "products";
     }
 
@@ -37,9 +38,9 @@ public class ProductController {
         return "new-product";
     }
 
-    @PostMapping("admin/saveProduct")
-    public String saveProduct(Product product, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {return "new-product";}
+    @PostMapping("/admin/saveProduct")
+    public String saveProduct(@Valid Product product, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) return "new-product";
         productRepository.save(product);
         return "redirect:/user/index";
     }
@@ -51,10 +52,16 @@ public class ProductController {
     }
 
     @GetMapping("/user/searchProducts")
-    public String searchProducts(Model model, @RequestParam(name = "productName", defaultValue = "") String query) {
-        List<Product> products = productRepository.findProductByNameContainsIgnoreCase((query));
-        model.addAttribute("products", products);
+    public String searchProducts(Model model,
+                                 @RequestParam(name = "productName", defaultValue = "") String query) {
+        model.addAttribute("products", productRepository.findProductByNameContainsIgnoreCase(query));
         model.addAttribute("query", query);
         return "products";
+    }
+
+    @PostMapping("/admin/update")
+    public String updateProduct(Model model, @RequestParam(name = "id") Long id) {
+        model.addAttribute("product", productRepository.findById(id).get());
+        return "new-product";
     }
 }
