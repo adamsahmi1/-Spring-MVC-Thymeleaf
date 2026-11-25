@@ -2,7 +2,6 @@ package net.sahmi.mundiaspringmvc.sec;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -22,7 +21,7 @@ public class SecurityConfig {
 
     @Bean
     public InMemoryUserDetailsManager inMemoryUserDetailsManager(PasswordEncoder passwordEncoder) {
-        // Pour le test seulement : utilisateurs en dur dans le code
+        // Juste pour le test : utilisateurs en dur dans le code
         return new InMemoryUserDetailsManager(
                 User.withUsername("user1").password(passwordEncoder.encode("1234")).roles("USER").build(),
                 User.withUsername("user2").password(passwordEncoder.encode("1234")).roles("USER").build(),
@@ -33,12 +32,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .formLogin(Customizer.withDefaults())
+                .formLogin(fl -> fl.loginPage("/login").permitAll())
                 .authorizeHttpRequests(ar -> ar
-                        .requestMatchers("/public/**", "/webjars/**").permitAll()
+                        .requestMatchers("/public/**", "/webjars/**", "/notAuthorized").permitAll()
                         .requestMatchers("/user/**").hasRole("USER")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
+                .exceptionHandling(eh -> eh.accessDeniedPage("/notAuthorized"))
                 .build();
     }
 }
