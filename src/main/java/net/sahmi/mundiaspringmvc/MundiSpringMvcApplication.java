@@ -14,11 +14,6 @@ import org.springframework.boot.security.autoconfigure.UserDetailsServiceAutoCon
 import org.springframework.boot.security.autoconfigure.web.servlet.ServletWebSecurityAutoConfiguration;
 
 @SpringBootApplication
-// (exclude = {
-//        SecurityAutoConfiguration.class,
-//        UserDetailsServiceAutoConfiguration.class,
-//        ServletWebSecurityAutoConfiguration.class
-//})
 public class MundiSpringMvcApplication {
 
     public static void main(String[] args) {
@@ -26,28 +21,28 @@ public class MundiSpringMvcApplication {
     }
 
     @Bean
-    public CommandLineRunner commandLineRunner(ProductRepository productRepository){
+    CommandLineRunner init(ProductRepository productRepository) {
         return args -> {
-            productRepository.save(Product.builder()
-                    .name ("Computer")
-                    .price(5400)
-                    .quantity(12)
-                    .build());
-            productRepository.save(Product.builder()
-                    .name("Printer")
-                    .price(1200)
-                    .quantity(11)
-                    .build());
-            productRepository.save(Product.builder()
-                    .name ("Smart Phone")
-                    .price(12000)
-                    .quantity (33)
-                    .build());
-            productRepository.findAll().forEach(p->{
-                System.out.println(p.toString());
-            });
-        };
+            Product product = new Product();
+            product.setName("Phone");
+            product.setPrice(8000);
+            product.setQuantity(10);
+            productRepository.save(product);
 
+            Product product2 = new Product();
+            product2.setName("Computer");
+            product2.setPrice(10000);
+            product2.setQuantity(25);
+            productRepository.save(product2);
+
+            Product product3 = new Product();
+            product3.setName("Printer");
+            product3.setPrice(1200);
+            product3.setQuantity(10);
+            productRepository.save(product3);
+        };
     }
+
+
 
 }
