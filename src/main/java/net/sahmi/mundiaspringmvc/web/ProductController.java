@@ -1,4 +1,5 @@
 package net.sahmi.mundiaspringmvc.web;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.ui.Model;
 import net.sahmi.mundiaspringmvc.entities.Product;
@@ -12,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-
-
 public class ProductController {
     private ProductRepository productRepository;
 
@@ -28,7 +27,8 @@ public class ProductController {
 
     @GetMapping("/user/index")
     public String index(Model model) {
-        model.addAttribute("products", productRepository.findAll());
+        List<Product> products = productRepository.findAll();
+        model.addAttribute("products", products);
         return "products";
     }
 
@@ -38,9 +38,9 @@ public class ProductController {
         return "new-product";
     }
 
-    @PostMapping("/admin/saveProduct")
+    @PostMapping("admin/saveProduct")
     public String saveProduct(@Valid Product product, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) return "new-product";
+        if(bindingResult.hasErrors()) {return "new-product";}
         productRepository.save(product);
         return "redirect:/user/index";
     }
@@ -52,16 +52,29 @@ public class ProductController {
     }
 
     @GetMapping("/user/searchProducts")
-    public String searchProducts(Model model,
-                                 @RequestParam(name = "productName", defaultValue = "") String query) {
-        model.addAttribute("products", productRepository.findProductByNameContainsIgnoreCase(query));
+    public String searchProducts(Model model, @RequestParam(name = "productName", defaultValue = "") String query) {
+        List<Product> products = productRepository.findProductByNameContainsIgnoreCase((query));
+        model.addAttribute("products", products);
         model.addAttribute("query", query);
         return "products";
     }
 
     @PostMapping("/admin/update")
     public String updateProduct(Model model, @RequestParam(name = "id") Long id) {
-        model.addAttribute("product", productRepository.findById(id).get());
+        Product product = productRepository.findById(id).get();
+        model.addAttribute("product", product);
         return "new-product";
     }
+
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "login";
+    }
+
 }
