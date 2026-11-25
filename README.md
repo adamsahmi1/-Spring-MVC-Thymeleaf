@@ -2,7 +2,7 @@
 
 Application web de gestion de produits développée avec **Spring Boot**, **Spring MVC**, **Thymeleaf** et **Spring Security**. Elle permet de consulter, rechercher, ajouter, modifier et supprimer des produits, avec une gestion des accès selon le rôle de l'utilisateur (`USER` ou `ADMIN`).
 
-![Liste des produits](docs/images/products.png)
+![Liste des produits](images/products.png)
 
 ---
 
@@ -43,31 +43,31 @@ Application web de gestion de produits développée avec **Spring Boot**, **Spri
 
 ### Page de connexion
 
-![Page de login](docs/images/login.png)
+![Page de login](images/login.png)
 
 ### Liste des produits
 
-![Liste des produits](docs/images/products.png)
+![Liste des produits](images/products.png)
 
 ### Recherche d'un produit
 
-![Recherche](docs/images/search.png)
+![Recherche](images/search.png)
 
 ### Ajout d'un produit
 
-![Ajout d'un produit](docs/images/add-product.png)
+![Ajout d'un produit](images/add-product.png)
 
 ### Validation du formulaire
 
-![Erreurs de validation](docs/images/validation.png)
+![Erreurs de validation](images/validation.png)
 
 ### Modification d'un produit
 
-![Modification](docs/images/edit-product.png)
+![Modification](images/edit-product.png)
 
 ### Accès refusé
 
-![Accès refusé](docs/images/access-denied.png)
+![Accès refusé](images/access-denied.png)
 
 ---
 
