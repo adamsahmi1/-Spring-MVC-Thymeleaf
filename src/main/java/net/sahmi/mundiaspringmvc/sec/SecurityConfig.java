@@ -1,4 +1,4 @@
-package dev.anwarelouardini.springmvcthymeleaf.sec;
+package net.sahmi.mundiaspringmvc.sec;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
